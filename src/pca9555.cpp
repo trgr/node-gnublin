@@ -27,7 +27,6 @@ void pca9555::Init(Handle<Object> exports) {
   NODE_SET_PROTOTYPE_METHOD(tpl,"Fail",pca9555::Fail);
   NODE_SET_PROTOTYPE_METHOD(tpl,"GetErrorMessage",pca9555::GetErrorMessage);
   NODE_SET_PROTOTYPE_METHOD(tpl,"ReadPort",pca9555::ReadPort);
-  NODE_SET_PROTOTYPE_METHOD(tpl,"WritePort",pca9555::WritePort);
   NODE_SET_PROTOTYPE_METHOD(tpl,"SetDeviceFile",pca9555::SetDeviceFile);
   
 
