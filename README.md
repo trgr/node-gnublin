@@ -22,9 +22,14 @@ pca9555.SetAddress(0x21);
 
 So far the library supports:
 `int PinMode(int pin,int value)`
+
 `int DigitalWrite(int pin, int value)`
+
 `int DigitalRead(int pin)`
+
 `int ReadState(int pin)`
+
 `void SetAddress(int address)`
+
 
 npm package in the works.
