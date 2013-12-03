@@ -9,7 +9,7 @@ Usage
 ====
 
 ```
-var gnublin = require("./gnublin");
+var gnublin = require("gnublin");
 var pca9555 = new gnublin.pca9555();
 
 /* Then do stuff to your relay like:*/
