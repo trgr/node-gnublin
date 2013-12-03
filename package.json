@@ -3,5 +3,5 @@
     "descrption": "Gnublin API for nodejs",
     "keywords": ["gnublin"],
     "main": "./build/Release/gnublin",
-    "version": "0.0.2"
+    "version": "0.0.3"
 }
