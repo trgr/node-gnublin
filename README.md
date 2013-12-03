@@ -8,7 +8,7 @@ Supporting so far only pca9555 on raspberry-pi
 Usage
 ====
 
-`
+```
 var gnublin = require("./gnublin");
 var pca9555 = new gnublin.pca9555();
 
@@ -18,7 +18,7 @@ pca9555.PinMode(1,"out");
 pca9555.DigitalWrite(1,1);
 pca9555.SetAddress(0x21);
 
-`
+```
 
 So far the library supports:
 `int PinMode(int pin,int value)`
