@@ -19,9 +19,9 @@ void pca9555::Init(Handle<Object> exports) {
   
   NODE_SET_PROTOTYPE_METHOD(tpl,"PinMode",pca9555::PinMode);
   NODE_SET_PROTOTYPE_METHOD(tpl,"DigitalWrite",pca9555::DigitalWrite);
-  NODE_SET_PROTOTYPE_METHOD(tpl,"DigitalRead",pca9555::DigitalWrite);
-  NODE_SET_PROTOTYPE_METHOD(tpl,"ReadState",pca9555::DigitalWrite);
-  NODE_SET_PROTOTYPE_METHOD(tpl,"SetAddress",pca9555::DigitalWrite);
+  NODE_SET_PROTOTYPE_METHOD(tpl,"DigitalRead",pca9555::DigitalRead);
+  NODE_SET_PROTOTYPE_METHOD(tpl,"ReadState",pca9555::ReadState);
+  NODE_SET_PROTOTYPE_METHOD(tpl,"SetAddress",pca9555::SetAddress);
   
 
   constructor = Persistent<Function>::New(tpl->GetFunction());
@@ -41,6 +41,17 @@ Handle<Value> pca9555::New(const Arguments& args) {
 Handle<Value> pca9555::DigitalWrite(const Arguments& args){
   HandleScope scope;
   pca9555* obj = ObjectWrap::Unwrap<pca9555>(args.This());
+
+  if(args.Length() > 2){
+    ThrowException(Exception::TypeError(String::New("DigitalWrite expects 2 arguments")));
+    return scope.Close(Undefined());
+  }
+		   
+  if(!args[0]->IsInt32() || !args[1]->IsInt32()){
+    ThrowException(Exception::TypeError(String::New("pin and value must be number")));
+    return scope.Close(Undefined());
+  }
+
   int pin  = args[0]->IntegerValue();
   int value  = args[1]->IntegerValue();
   int result = obj->pca9555_gnublin->digitalWrite(pin,value);
@@ -63,12 +74,12 @@ Handle<Value> pca9555::ReadState(const Arguments& args){
   return scope.Close(Number::New(result));
 }
 
-void pca9555::SetAddress(const Arguments& args){
+ Handle<Value> pca9555::SetAddress(const Arguments& args){
   HandleScope scope;
   pca9555* obj = ObjectWrap::Unwrap<pca9555>(args.This());
   int address  = args[0]->IntegerValue();
   obj->pca9555_gnublin->setAddress(address);
-  return;
+  return scope.Close(Undefined());
 }
 
 Handle<Value> pca9555::PinMode(const Arguments& args){

@@ -15,7 +15,7 @@ class pca9555 : public node::ObjectWrap {
   static v8::Handle<v8::Value> PortMode(const v8::Arguments& args);
   static v8::Handle<v8::Value> DigitalWrite(const v8::Arguments& args);
   static v8::Handle<v8::Value> DigitalRead(const v8::Arguments& args);
-  static void SetAddress(const v8::Arguments& args);
+  static v8::Handle<v8::Value> SetAddress(const v8::Arguments& args);
   static v8::Handle<v8::Value> ReadState(const v8::Arguments& args);
   
   static v8::Handle<v8::Value> GetErrorMessage(const v8::Arguments& args);
