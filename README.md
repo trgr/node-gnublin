@@ -21,7 +21,10 @@ pca9555.SetAddress(0x21);
 ```
 
 So far the library supports:
-`int PinMode(int pin,int value)`
+
+`int PinMode(int pin,string mode)`
+
+`int PortMode(int port, string mode)`
 
 `int DigitalWrite(int pin, int value)`
 
@@ -29,7 +32,14 @@ So far the library supports:
 
 `int ReadState(int pin)`
 
+`int ReadPort(int port)`
+
+`void SetDeviceFile(string file)`
+
 `void SetAddress(int address)`
 
+`bool Fail()`
+
+`string GetErrorMessage()`
 
 npm package in the works.

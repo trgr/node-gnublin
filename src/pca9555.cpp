@@ -18,10 +18,17 @@ void pca9555::Init(Handle<Object> exports) {
   tpl->InstanceTemplate()->SetInternalFieldCount(1);
   
   NODE_SET_PROTOTYPE_METHOD(tpl,"PinMode",pca9555::PinMode);
+  NODE_SET_PROTOTYPE_METHOD(tpl,"PortMode",pca9555::PortMode);
   NODE_SET_PROTOTYPE_METHOD(tpl,"DigitalWrite",pca9555::DigitalWrite);
   NODE_SET_PROTOTYPE_METHOD(tpl,"DigitalRead",pca9555::DigitalRead);
   NODE_SET_PROTOTYPE_METHOD(tpl,"ReadState",pca9555::ReadState);
   NODE_SET_PROTOTYPE_METHOD(tpl,"SetAddress",pca9555::SetAddress);
+
+  NODE_SET_PROTOTYPE_METHOD(tpl,"Fail",pca9555::Fail);
+  NODE_SET_PROTOTYPE_METHOD(tpl,"GetErrorMessage",pca9555::GetErrorMessage);
+  NODE_SET_PROTOTYPE_METHOD(tpl,"ReadPort",pca9555::ReadPort);
+  NODE_SET_PROTOTYPE_METHOD(tpl,"WritePort",pca9555::WritePort);
+  NODE_SET_PROTOTYPE_METHOD(tpl,"SetDeviceFile",pca9555::SetDeviceFile);
   
 
   constructor = Persistent<Function>::New(tpl->GetFunction());
@@ -52,16 +59,31 @@ Handle<Value> pca9555::DigitalWrite(const Arguments& args){
     return scope.Close(Undefined());
   }
 
-  int pin  = args[0]->IntegerValue();
-  int value  = args[1]->IntegerValue();
+  int pin  = args[0]->Int32Value();
+  int value  = args[1]->Int32Value();
   int result = obj->pca9555_gnublin->digitalWrite(pin,value);
   return scope.Close(Number::New(result));
+}
+
+Handle<Value> pca9555::GetErrorMessage(const Arguments& args){
+  HandleScope scope;
+  pca9555* obj = ObjectWrap::Unwrap<pca9555>(args.This());
+  const char* result = obj->pca9555_gnublin->getErrorMessage();
+  return scope.Close(String::New(result));
+}
+
+
+Handle<Value> pca9555::Fail(const Arguments& args){
+  HandleScope scope;
+  pca9555* obj = ObjectWrap::Unwrap<pca9555>(args.This());
+  bool result = obj->pca9555_gnublin->fail();
+  return scope.Close(Boolean::New(result));
 }
 
 Handle<Value> pca9555::DigitalRead(const Arguments& args){
   HandleScope scope;
   pca9555* obj = ObjectWrap::Unwrap<pca9555>(args.This());
-  int pin  = args[0]->IntegerValue();
+  int pin  = args[0]->Int32Value();
   int result = obj->pca9555_gnublin->digitalRead(pin);
   return scope.Close(Number::New(result));
 }
@@ -69,15 +91,23 @@ Handle<Value> pca9555::DigitalRead(const Arguments& args){
 Handle<Value> pca9555::ReadState(const Arguments& args){
   HandleScope scope;
   pca9555* obj = ObjectWrap::Unwrap<pca9555>(args.This());
-  int pin  = args[0]->IntegerValue();
+  int pin  = args[0]->Int32Value();
   int result = obj->pca9555_gnublin->readState(pin);
   return scope.Close(Number::New(result));
+}
+
+Handle<Value> pca9555::ReadPort(const Arguments& args){
+  HandleScope scope;
+  pca9555* obj = ObjectWrap::Unwrap<pca9555>(args.This());
+  int port  = args[0]->Int32Value();
+  unsigned char result = obj->pca9555_gnublin->readPort(port);
+  return scope.Close(String::New(reinterpret_cast<const char*>(result)));
 }
 
  Handle<Value> pca9555::SetAddress(const Arguments& args){
   HandleScope scope;
   pca9555* obj = ObjectWrap::Unwrap<pca9555>(args.This());
-  int address  = args[0]->IntegerValue();
+  int address  = args[0]->Int32Value();
   obj->pca9555_gnublin->setAddress(address);
   return scope.Close(Undefined());
 }
@@ -85,7 +115,7 @@ Handle<Value> pca9555::ReadState(const Arguments& args){
 Handle<Value> pca9555::PinMode(const Arguments& args){
   HandleScope scope;
   pca9555* obj = ObjectWrap::Unwrap<pca9555>(args.This());
-  int pin  = args[0]->IntegerValue();
+  int pin  = args[0]->Int32Value();
 
   Local<String> v8mode = args[1]->ToString();
   String::Utf8Value umode(v8mode);
@@ -94,13 +124,12 @@ Handle<Value> pca9555::PinMode(const Arguments& args){
   int result = obj->pca9555_gnublin->pinMode(pin,mode);
 
   return scope.Close(Number::New(result));
-  
 }
 
 Handle<Value> pca9555::PortMode(const Arguments& args){
   HandleScope scope;
   pca9555* obj = ObjectWrap::Unwrap<pca9555>(args.This());
-  int port  = args[0]->IntegerValue();
+  int port  = args[0]->Int32Value();
 
   Local<String> v8mode = args[1]->ToString();
   String::Utf8Value umode(v8mode);
@@ -108,6 +137,19 @@ Handle<Value> pca9555::PortMode(const Arguments& args){
   
   int result = obj->pca9555_gnublin->portMode(port,mode);
 
-  return scope.Close(Number::New(result));  
+  return scope.Close(Number::New(result));
+}
+
+Handle<Value> pca9555::SetDeviceFile(const Arguments& args){
+  HandleScope scope;
+  pca9555* obj = ObjectWrap::Unwrap<pca9555>(args.This());
+  
+  Local<String> v8file = args[0]->ToString();
+  String::Utf8Value ufile(v8file);
+  const char* file(*ufile);
+  
+  obj->pca9555_gnublin->setDevicefile(file);
+
+  return scope.Close(Undefined()); 
 }
 

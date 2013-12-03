@@ -11,13 +11,16 @@ class pca9555 : public node::ObjectWrap {
   ~pca9555();
 
   static v8::Handle<v8::Value> New(const v8::Arguments& args);
+  static v8::Handle<v8::Value> Fail(const v8::Arguments& args);
+  static v8::Handle<v8::Value> SetDeviceFile(const v8::Arguments& args);
   static v8::Handle<v8::Value> PinMode(const v8::Arguments& args);
   static v8::Handle<v8::Value> PortMode(const v8::Arguments& args);
   static v8::Handle<v8::Value> DigitalWrite(const v8::Arguments& args);
   static v8::Handle<v8::Value> DigitalRead(const v8::Arguments& args);
   static v8::Handle<v8::Value> SetAddress(const v8::Arguments& args);
   static v8::Handle<v8::Value> ReadState(const v8::Arguments& args);
-  
+  static v8::Handle<v8::Value> ReadPort(const v8::Arguments& args);
+  static v8::Handle<v8::Value> WritePort(const v8::Arguments& args);
   static v8::Handle<v8::Value> GetErrorMessage(const v8::Arguments& args);
   
   static v8::Persistent<v8::Function> constructor;
