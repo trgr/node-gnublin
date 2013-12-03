@@ -8,7 +8,6 @@ class pca9555 : public node::ObjectWrap {
   static void Init(v8::Handle<v8::Object> exports);
 
  private:
-  explicit pca9555(double value = 0);
   ~pca9555();
 
   static v8::Handle<v8::Value> New(const v8::Arguments& args);
