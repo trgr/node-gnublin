@@ -1,5 +1,6 @@
 #define BUILDING_NODE_EXTENSION
 #define BOARD RASPBERRY_PI
+#include <sstream>
 #include <node.h>
 #include "pca9555.h"
 
@@ -95,12 +96,31 @@ Handle<Value> pca9555::ReadState(const Arguments& args){
   return scope.Close(Number::New(result));
 }
 
+Handle<Value> pca9555::WritePort(const Arguments& args){
+  HandleScope scope;
+  pca9555* obj = ObjectWrap::Unwrap<pca9555>(args.This());
+  
+  
+  int port = args[0]->Int32Value();
+  unsigned char value = args[0]->Int32Value();
+  
+  int result = obj->pca9555_gnublin->writePort(port,value);
+  return scope.Close(Number::New(result));
+}
+
+
 Handle<Value> pca9555::ReadPort(const Arguments& args){
   HandleScope scope;
   pca9555* obj = ObjectWrap::Unwrap<pca9555>(args.This());
   int port  = args[0]->Int32Value();
-  unsigned char result = obj->pca9555_gnublin->readPort(port);
-  return scope.Close(String::New(reinterpret_cast<const char*>(result)));
+  
+  /* very hacky*/
+  unsigned char uresult = obj->pca9555_gnublin->readPort(port);
+  stringstream s;
+  s << uresult;
+  const char* result = s.str().c_str();
+  
+  return scope.Close(String::New(result));
 }
 
  Handle<Value> pca9555::SetAddress(const Arguments& args){
