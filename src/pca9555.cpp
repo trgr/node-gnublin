@@ -116,10 +116,7 @@ Handle<Value> pca9555::ReadPort(const Arguments& args){
   
   /* very hacky*/
   unsigned char uresult = obj->pca9555_gnublin->readPort(port);
-  stringstream s;
-  s << uresult;
-  const char* result = s.str().c_str();
-  
+  int result = uresult;
   return scope.Close(String::New(result));
 }
 

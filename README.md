@@ -18,6 +18,8 @@ pca9555.PinMode(1,"out");
 pca9555.DigitalWrite(1,1);
 pca9555.SetAddress(0x21);
 
+var byte = pca9555.ReadPort(0).toString(16);
+
 ```
 
 So far the library supports:
