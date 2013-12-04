@@ -3,7 +3,11 @@ node-gnublin
 
 Bindings for the gnublin api http://en.gnublin.org/index.php/API
 
-Supporting so far only pca9555 on raspberry-pi
+Supporting so far only the pca9555 subset on raspberry-pi
+
+Install
+=======
+Do the ususal `npm install gnublin`
 
 Usage
 ====
@@ -45,5 +49,3 @@ So far the library supports:
 `string GetErrorMessage()`
 
 Modes are either `"in" or "out"` 
-
-npm package in the works.
