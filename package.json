@@ -4,7 +4,7 @@
     "descrption": "Gnublin API bindings for node",
     "keywords": ["gnublin"],
     "main": "build/Release/gnublin",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "repository": {
 	"type" : "git",
 	"url" : "git://github.com/RampantOwl/node-gnublin.git"
