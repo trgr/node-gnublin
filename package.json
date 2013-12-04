@@ -8,5 +8,6 @@
     "repository": {
 	"type" : "git",
 	"url" : "git://github.com/RampantOwl/node-gnublin.git"
-    }
+    },
+    "license": "GPL-v3"
 }
