@@ -44,4 +44,6 @@ So far the library supports:
 
 `string GetErrorMessage()`
 
+Modes are either `"in" or "out"` 
+
 npm package in the works.
