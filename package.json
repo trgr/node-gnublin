@@ -1,7 +1,12 @@
 {
     "name": "gnublin",
-    "descrption": "Gnublin API for nodejs",
+    "author" : "RampantOwl",
+    "descrption": "Gnublin API bindings for node",
     "keywords": ["gnublin"],
-    "main": "./build/Release/gnublin",
+    "main": "build/Release/gnublin",
     "version": "0.0.3"
+    "repository": {
+	"type" : "git",
+	"url" : "git://github.com/RampantOwl/node-gnublin.git"
+    }
 }
