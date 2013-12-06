@@ -49,8 +49,8 @@ Handle<Value> pca9555::DigitalWrite(const Arguments& args){
   HandleScope scope;
   pca9555* obj = ObjectWrap::Unwrap<pca9555>(args.This());
 
-  if(args.Length() > 2){
-    ThrowException(Exception::TypeError(String::New("DigitalWrite expects 2 arguments")));
+  if(args.Length() != 2){
+    ThrowException(Exception::Error(String::New("DigitalWrite expects 2 arguments")));
     return scope.Close(Undefined());
   }
 		   
@@ -83,6 +83,17 @@ Handle<Value> pca9555::Fail(const Arguments& args){
 Handle<Value> pca9555::DigitalRead(const Arguments& args){
   HandleScope scope;
   pca9555* obj = ObjectWrap::Unwrap<pca9555>(args.This());
+  
+  if(args.Length() != 1){
+    ThrowException(Exception::Error(String::New("DigitalRead expects 1 argument")));
+    return scope.Close(Undefined());
+  }
+  
+  if(!args[0]->IsInt32()){
+    ThrowException(Exception::TypeError(String::New("DigitalRead expects first argument to be of type integer")));
+    return scope.Close(Undefined());
+  }
+
   int pin  = args[0]->Int32Value();
   int result = obj->pca9555_gnublin->digitalRead(pin);
   return scope.Close(Number::New(result));
@@ -131,6 +142,17 @@ Handle<Value> pca9555::ReadPort(const Arguments& args){
 Handle<Value> pca9555::PinMode(const Arguments& args){
   HandleScope scope;
   pca9555* obj = ObjectWrap::Unwrap<pca9555>(args.This());
+  
+  if(args.Length() != 2){
+    ThrowException(Exception::TypeError(String::New("PinMode expects 2 arguments")));
+    return scope.Close(Undefined());
+  }
+
+  if(!args[0]->IsInt32() || !args[1]->IsString()){
+    ThrowException(Exception::TypeError(String::New("PinMode expects first argument to be integer and second to be a string")));
+    return scope.Close(Undefined());
+  }
+  
   int pin  = args[0]->Int32Value();
 
   Local<String> v8mode = args[1]->ToString();
@@ -145,6 +167,17 @@ Handle<Value> pca9555::PinMode(const Arguments& args){
 Handle<Value> pca9555::PortMode(const Arguments& args){
   HandleScope scope;
   pca9555* obj = ObjectWrap::Unwrap<pca9555>(args.This());
+
+  if(args.Length() != 2){
+    ThrowException(Exception::Error(String::New("PortMode expects 2 arguments")));
+    return scope.Close(Undefined());
+  }
+    
+  if(!args[0]->IsInt32() || !args[1]->IsString()){
+    ThrowException(Exception::TypeError(String::New("PortMode expects first argument to be integer and second to be a string")));
+    return scope.Close(Undefined());
+  }
+  
   int port  = args[0]->Int32Value();
 
   Local<String> v8mode = args[1]->ToString();
