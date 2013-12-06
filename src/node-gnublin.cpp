@@ -4,19 +4,10 @@
 
 using namespace v8;
 
-Handle<Value> CreateObject(const Arguments& args) {
-  HandleScope scope;
-  
-  Local<Object> obj = Object::New();
-  obj->Set(String::NewSymbol("INPUT"), String::New("in"));
-  
-  return scope.Close(obj);
-}
-
 void InitAll(Handle<Object> exports) {
   pca9555::Init(exports);
   
-  /* Expos some properties matching constants found in gnublin.cpp
+  /* Expose some properties matching constants found in gnublin.cpp
      for convenience
    */
   exports->Set(String::NewSymbol("INPUT"), String::New(INPUT));
