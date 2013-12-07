@@ -93,6 +93,36 @@ module.exports = {
 	test.ok(Either(p.PortMode(0,"in"),-1,1),"PortMode does not return -1 or 1")
 	test.done()
 	
+    },
+    readPort : function(test){
+	var p = this.pca9555
+	test.throws(function(){
+	    p.ReadPort()
+	},Error,"ReadPort does not throw an exception when passed no arguments")
+	test.throws(function(){
+	    p.pca9555.ReadPort("a")
+	},Error,"ReadPort does not throw an exception when passed a non-numerical argument");
+	test.ok(InRange(p.ReadPort(0),-1,255),"ReadPort does not return a value in the range -1 255")
+	
+	test.done()
+
+    },
+    setAddress : function(test){
+	var p = this.pca9555
+	test.throws(function(){
+	    p.SetAddress()
+	},Error,"SetAddress does not throw an exception when passed no arguments")
+	test.done()
+    },
+    setDeviceFile : function(test){
+	var p = this.pca9555
+	test.throws(function(){
+	    p.SetDeviceFile()
+	},Error,"SetDeviceFile does not throw an exception when passed no arguments")
+	test.throws(function(){
+	    p.pca9555.ReadPort(-1)
+	},Error,"SetDeviceFile does not throw an exception when passed non-string argument")
+	test.done()
     }
         
 };

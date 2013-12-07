@@ -28,6 +28,7 @@ void pca9555::Init(Handle<Object> exports) {
   NODE_SET_PROTOTYPE_METHOD(tpl,"Fail",pca9555::Fail);
   NODE_SET_PROTOTYPE_METHOD(tpl,"GetErrorMessage",pca9555::GetErrorMessage);
   NODE_SET_PROTOTYPE_METHOD(tpl,"ReadPort",pca9555::ReadPort);
+  NODE_SET_PROTOTYPE_METHOD(tpl,"WritePort",pca9555::WritePort);
   NODE_SET_PROTOTYPE_METHOD(tpl,"SetDeviceFile",pca9555::SetDeviceFile);
   
 
@@ -123,6 +124,16 @@ Handle<Value> pca9555::WritePort(const Arguments& args){
 Handle<Value> pca9555::ReadPort(const Arguments& args){
   HandleScope scope;
   pca9555* obj = ObjectWrap::Unwrap<pca9555>(args.This());
+  if(args.Length() != 1){
+    ThrowException(Exception::Error(String::New("ReadPort expects 1 argument")));
+    return scope.Close(Undefined());
+  }
+    
+  if(!args[0]->IsInt32()){
+    ThrowException(Exception::TypeError(String::New("ReadPort expects first argument to be of type integer")));
+    return scope.Close(Undefined());
+  }
+
   int port  = args[0]->Int32Value();
   
   /* very hacky*/
@@ -134,6 +145,13 @@ Handle<Value> pca9555::ReadPort(const Arguments& args){
  Handle<Value> pca9555::SetAddress(const Arguments& args){
   HandleScope scope;
   pca9555* obj = ObjectWrap::Unwrap<pca9555>(args.This());
+
+  if(args.Length() != 1){
+    ThrowException(Exception::Error(String::New("SetAddress expects 1 argument")));
+    return scope.Close(Undefined());
+  }
+  
+  
   int address  = args[0]->Int32Value();
   obj->pca9555_gnublin->setAddress(address);
   return scope.Close(Undefined());
@@ -192,6 +210,15 @@ Handle<Value> pca9555::PortMode(const Arguments& args){
 Handle<Value> pca9555::SetDeviceFile(const Arguments& args){
   HandleScope scope;
   pca9555* obj = ObjectWrap::Unwrap<pca9555>(args.This());
+  if(args.Length() != 1){
+    ThrowException(Exception::Error(String::New("SetDeviceFile expects 2 arguments")));
+    return scope.Close(Undefined());
+  }
+    
+  if(!args[0]->IsString()){
+    ThrowException(Exception::TypeError(String::New("SetDeviceFile expects first argument to be a string")));
+    return scope.Close(Undefined());
+  }
   
   Local<String> v8file = args[0]->ToString();
   String::Utf8Value ufile(v8file);
