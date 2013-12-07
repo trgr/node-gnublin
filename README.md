@@ -45,6 +45,8 @@ So far the library supports:
 
 `int ReadPort(int port)`
 
+`int WritePort(int port,unsigned char value)`
+
 `void SetDeviceFile(string file)`
 
 `void SetAddress(int address)`
@@ -53,4 +55,3 @@ So far the library supports:
 
 `string GetErrorMessage()`
 
-Modes are either `"in" or "out"` 
